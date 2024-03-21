@@ -19,7 +19,7 @@ class RmCalculator {
     let currentRm = this.calculateRm(this.lastWeight, this.lastReps);
     let setColorPerRep = new Set();
     let yellows = [];
-    for (let w = this.lastWeight - 2 * this.increment; w <= this.lastWeight + 3 * this.increment; w += this.increment) {
+    for (let w = this.lastWeight - 5 * this.increment; w <= this.lastWeight + 4 * this.increment; w += this.increment) {
       const line = [];
       for (let r = this.minRep; r <= this.maxRep; r++) {
         let rm = this.calculateRm(w, r);
@@ -46,6 +46,9 @@ class RmCalculator {
       this.values.push(line);
     }
     let minValue = yellows[0];
+    if (minValue === undefined) {
+        return;
+    }
     minValue.color = "orange";
     for (let y of yellows) {
       if (y.value < minValue.value) {

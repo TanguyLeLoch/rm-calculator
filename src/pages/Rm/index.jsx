@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import RmCalculator from './RmCalculator';
+import NumberInput from "./NumberInput";
 
 function Rm() {
     const [lastWeight, setLastWeight] = useState(180);
@@ -9,6 +10,10 @@ function Rm() {
     const [maxRep, setMaxRep] = useState(10);
     const [resultsMatrix, setResultsMatrix] = useState(new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep));
 
+    useEffect(() => {
+        const rmMatrix = new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep);
+        setResultsMatrix(rmMatrix);
+    }, [lastWeight, lastRep, increment, minRep, maxRep]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -29,57 +34,37 @@ function Rm() {
         }}>
             <h1>Rm Calculator</h1>
             <form onSubmit={handleSubmit} style={{marginBottom: '20px'}}>
-                <div>
-                    <label htmlFor='lastWeight'>Previous Weight:</label>
-                    <input
-                        type='number'
-                        id='lastWeight'
-                        value={lastWeight}
-                        onChange={(e) => setLastWeight(parseInt(e.target.value))}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor='lastRep'>Previous nbRep:</label>
-                    <input
-                        type='number'
-                        id='lastRep'
-                        value={lastRep}
-                        onChange={(e) => setLastRep(parseInt(e.target.value))}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor='increment'>Increment:</label>
-                    <input
-                        type='number'
-                        id='increment'
-                        value={increment}
-                        onChange={(e) => setIncrement(parseInt(e.target.value))}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor='minRep'>Min nbRep:</label>
-                    <input
-                        type='number'
-                        id='minRep'
-                        value={minRep}
-                        onChange={(e) => setMinRep(parseInt(e.target.value))}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor='maxRep'>Max nbRep:</label>
-                    <input
-                        type='number'
-                        id='maxRep'
-                        value={maxRep}
-                        onChange={(e) => setMaxRep(parseInt(e.target.value))}
-                        required
-                    />
-                </div>
-                <button type='submit'>Calculate</button>
+                <NumberInput
+                    id="lastWeight"
+                    label="Previous Weight"
+                    value={lastWeight}
+                    onChange={setLastWeight}
+                />
+                <NumberInput
+                    id="lastRep"
+                    label="Previous nbRep"
+                    value={lastRep}
+                    onChange={setLastRep}
+                />
+                <NumberInput
+                    id="increment"
+                    label="Increment"
+                    value={increment}
+                    onChange={setIncrement}
+                />
+                <NumberInput
+                    id="minRep"
+                    label="Min nbRep"
+                    value={minRep}
+                    onChange={setMinRep}
+                />
+                <NumberInput
+                    id="maxRep"
+                    label="Max nbRep"
+                    value={maxRep}
+                    onChange={setMaxRep}
+                />
+                {/*<button type='submit'>Calculate</button>*/}
             </form>
 
             {resultsMatrix && (<table
