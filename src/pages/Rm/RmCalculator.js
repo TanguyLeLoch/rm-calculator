@@ -15,7 +15,11 @@ class RmCalculator {
     return weight / (1.0278 - 0.0278 * reps);
   }
 
+
   computeRmValues() {
+    if (!this.validateData()) {
+        return;
+    }
     let currentRm = this.calculateRm(this.lastWeight, this.lastReps);
     let setColorPerRep = new Set();
     let yellows = [];
@@ -58,6 +62,31 @@ class RmCalculator {
       }
     }
   }
+
+
+  validateData() {
+    const fields = [this.lastWeight, this.lastReps, this.increment, this.minRep, this.maxRep];
+    for (let field of fields) {
+        if (field === undefined) {
+          console.log("Missing data")
+          return false;
+        }
+        if (field < 0) {
+          console.log("Data must be positive")
+          return false;
+        }
+        if (isNaN(field)) {
+          console.log("Data must be a number")
+          return false;
+        }
+        if (this.maxRep < this.minRep) {
+          console.log("Max reps must be greater than min reps")
+          return false;
+        }
+    }
+    return true;
+  }
+
 
 
 }

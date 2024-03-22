@@ -28,7 +28,25 @@ function Rm() {
         const formatted = number.toFixed(2);
         return formatted.endsWith('.00') ? formatted.slice(0, -3) : formatted;
     };
+    const updateLastRep = (value) => {
+        if (value < minRep) {
+            setMinRep(value);
+        } else if (value > maxRep) {
+            setMaxRep(value);
+        }
+    }
 
+    const updateMinRep = (value) => {
+        if (value > maxRep) {
+            setMaxRep(value);
+        }
+    }
+
+    const updateMaxRep = (value) => {
+        if (value < minRep) {
+            setMinRep(value);
+        }
+    }
     return (<div style={{
             color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
         }}>
@@ -45,6 +63,7 @@ function Rm() {
                     label="Previous nbRep"
                     value={lastRep}
                     onChange={setLastRep}
+                    onBlur={updateLastRep}
                 />
                 <NumberInput
                     id="increment"
@@ -57,12 +76,14 @@ function Rm() {
                     label="Min nbRep"
                     value={minRep}
                     onChange={setMinRep}
+                    onBlur={updateMinRep}
                 />
                 <NumberInput
                     id="maxRep"
                     label="Max nbRep"
                     value={maxRep}
                     onChange={setMaxRep}
+                    onBlur={updateMaxRep}
                 />
                 {/*<button type='submit'>Calculate</button>*/}
             </form>
