@@ -2,14 +2,14 @@ function NumberInput({ id, label, value, onChange, onBlur = () => {}, required =
     return (<div>
         <label htmlFor={id}>{label}:</label>
         <input
-            type="number"
+            type="text"
             id={id}
             value={value}
-            onChange={(e) => onChange(parseInt(e.target.value))}
-            onBlur={(e) => onBlur(parseInt(e.target.value))}
+            onChange={(e) => onChange(e.target.value)}
+            onBlur={(e) => onBlur(e.target.value)}
             required={required}
-            pattern="[0-9]*"
-            inputMode="numeric"
+            inputMode="decimal"
+            style={{fontSize: "16px"}}
         />
     </div>);
 }
