@@ -8,8 +8,9 @@ function NumberInput({id, label, value, onChange, helpText, onBlur}) {
     onBlur = onBlur || noOp;
     const [isFocused, setIsFocused] = useState(false);
 
-    const handleFocus = () => {
+    const handleFocus = (e) => {
         setIsFocused(true);
+        e.target.select(); // Automatically select the text on focus
     };
 
     const handleBlur = (e) => {
