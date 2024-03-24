@@ -1,0 +1,43 @@
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 20px; /* Reduced width */
+    height: 10px; /* Reduced height */
+    font-size: 10px; /* Ensure surrounding text matches this size */
+    margin: 0 5px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 17px; /* Adjusted for new height to keep it round */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 8px; /* Reduced size of the slider button */
+    width: 8px; /* Reduced size of the slider button */
+    left: 1px; /* Adjusted for reduced size */
+    bottom: 1px; /* Adjusted for reduced size */
+    background-color: #7c7676;
+    transition: .4s;
+    border-radius: 50%; /* Keeps it circular */
+}
+
+input:checked + .slider:before {
+    transform: translateX(9px); /* Adjusted to match the new dimensions */
+}

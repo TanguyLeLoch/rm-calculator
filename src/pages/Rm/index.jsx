@@ -4,6 +4,7 @@ import NumberInput from "./NumberInput";
 
 import './Rm.css';
 import Legend from "./Legend";
+import FormulaToggle from "./FormulaToggle";
 
 function Rm() {
     const [lastWeight, setLastWeight] = useState('180');
@@ -11,18 +12,21 @@ function Rm() {
     const [increment, setIncrement] = useState('5');
     const [minRep, setMinRep] = useState('8');
     const [maxRep, setMaxRep] = useState('10');
-    const [resultsMatrix, setResultsMatrix] = useState(new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep));
+    const [isBrzycki, setIsBrzycki] = useState(true);
+    const [resultsMatrix, setResultsMatrix] = useState(new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep, isBrzycki));
+
+
 
     useEffect(() => {
-        const rmMatrix = new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep);
+        const rmMatrix = new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep, isBrzycki);
         setResultsMatrix(rmMatrix);
-    }, [lastWeight, lastRep, increment, minRep, maxRep]);
+    }, [lastWeight, lastRep, increment, minRep, maxRep, isBrzycki]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('lastWeight', lastWeight);
         console.log(lastWeight);
-        const rmMatrix = new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep);
+        const rmMatrix = new RmCalculator(lastWeight, lastRep, increment, minRep, maxRep, isBrzycki);
         console.log('rmMatrix', rmMatrix);
         setResultsMatrix(rmMatrix);
     };
@@ -52,6 +56,10 @@ function Rm() {
             setMinRep(value);
         }
     }
+
+    const handleFormulaToggle = () => {
+        setIsBrzycki(!isBrzycki);
+    };
     return (<div style={{
         color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'    }}>
         <h1>Rm Calculator</h1>
@@ -129,6 +137,10 @@ function Rm() {
         </table>)}
 
         <Legend/>
+<FormulaToggle label1="Brzycki"
+               label2="Epley"
+               onToggle={handleFormulaToggle}
+              />
     </div>);
 
 }

@@ -2,7 +2,8 @@ class RmCalculator {
 
     values = [];
 
-    constructor(lastWeight, lastReps, increment, minRep, maxRep) {
+    constructor(lastWeight, lastReps, increment, minRep, maxRep, isBrzycki) {
+        this.isBrzycki = isBrzycki;
         this.storeDataInNumber(lastWeight, lastReps, increment, minRep, maxRep);
         if (!this.validateData()) {
             return;
@@ -34,6 +35,9 @@ class RmCalculator {
     }
 
     calculateRm(weight, reps) {
+        if (this.isBrzycki) {
+            return weight * (36 / (37 - reps));
+        }
         return weight *(1 + 1/30 * reps)
     }
 
