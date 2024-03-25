@@ -70,6 +70,7 @@ function Rm() {
                 value={lastWeight}
                 onChange={setLastWeight}
                 helpText={'Enter the weight you lifted last time'}
+                step={Number(increment)}
             />
             <NumberInput
                 id="lastRep"
@@ -137,10 +138,10 @@ function Rm() {
         </table>)}
 
         <Legend/>
-<FormulaToggle label1="Brzycki"
-               label2="Epley"
-               onToggle={handleFormulaToggle}
-              />
+        <FormulaToggle label1="Brzycki"
+                       label2="Epley"
+                       onToggle={handleFormulaToggle}
+        />
     </div>);
 
 }
