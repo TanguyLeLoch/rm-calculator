@@ -1,0 +1,113 @@
+import { Injectable } from '@angular/core';
+import { RmValue, RmCalculatorInput } from '../models/rm-values.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RmCalculatorService {
+
+  calculateRm(weight: number, reps: number, isBrzycki: boolean): number {
+    if (isBrzycki) {
+      return weight * (36 / (37 - reps));
+    }
+    return weight * (1 + (1 / 30) * reps);
+  }
+
+  computeRmMatrix(input: RmCalculatorInput): RmValue[][] {
+    const { lastWeight, lastReps, increment, minRep, maxRep, isBrzycki } = input;
+
+    if (!this.validateInput(input)) {
+      return [];
+    }
+
+    const currentRm = this.calculateRm(lastWeight, lastReps, isBrzycki);
+    const setColorPerRep = new Set<number>();
+    const yellows: RmValue[] = [];
+    const values: RmValue[][] = [];
+
+    for (let w = lastWeight - 5 * increment; w <= lastWeight + 4 * increment; w += increment) {
+      const line: RmValue[] = [];
+
+      for (let r = minRep; r <= maxRep; r++) {
+        const rm = this.calculateRm(w, r, isBrzycki);
+        let color: string;
+        let textColor = 'white';
+
+        if (rm < currentRm) {
+          color = 'gray';
+        } else if (w === lastWeight && r === lastReps) {
+          color = 'green';
+          textColor = 'black';
+        } else if (r !== lastReps && rm > currentRm && !setColorPerRep.has(r)) {
+          setColorPerRep.add(r);
+          color = 'yellow';
+          textColor = 'black';
+        } else {
+          color = 'black';
+        }
+
+        const rmValue: RmValue = {
+          value: rm,
+          color,
+          reps: r,
+          weight: w,
+          textColor
+        };
+
+        line.push(rmValue);
+
+        if (color === 'yellow') {
+          yellows.push(rmValue);
+        }
+      }
+
+      values.push(line);
+    }
+
+    // Find the minimum yellow value and mark it as orange (goal)
+    if (yellows.length > 0) {
+      let minValue = yellows[0];
+      minValue.color = 'orange';
+
+      for (const y of yellows) {
+        if (y.value < minValue.value) {
+          minValue.color = 'yellow';
+          minValue = y;
+          minValue.color = 'orange';
+        }
+      }
+    }
+
+    return values;
+  }
+
+  private validateInput(input: RmCalculatorInput): boolean {
+    const { lastWeight, lastReps, increment, minRep, maxRep } = input;
+
+    const fields = [lastWeight, lastReps, increment, minRep, maxRep];
+
+    for (const field of fields) {
+      if (field === undefined || field === null || isNaN(field)) {
+        return false;
+      }
+      if (field < 0) {
+        return false;
+      }
+    }
+
+    if (maxRep < minRep) {
+      return false;
+    }
+
+    if (increment <= 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  formatNumber(num: number): string {
+    const formatted = num.toFixed(2);
+    return formatted.endsWith('.00') ? formatted.slice(0, -3) : formatted;
+  }
+}
