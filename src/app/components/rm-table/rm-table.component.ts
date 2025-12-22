@@ -1,4 +1,5 @@
 import { Component, input, inject } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { RmValue } from '../../models/rm-values.model';
 import { RmCalculatorService } from '../../services/rm-calculator.service';
 
@@ -7,26 +8,25 @@ import { RmCalculatorService } from '../../services/rm-calculator.service';
   standalone: true,
   template: `
     @if (values() && values().length > 0) {
-      <table class="border-collapse mx-auto my-4">
+      <table class="border-collapse mx-auto my-2">
         <thead>
           <tr>
-            <th class="p-2 border-b border-white text-sm">W \\ R</th>
+            <th class="p-1 border-b border-white text-xs">W \\ R</th>
             @for (rep of repHeaders(); track rep) {
-              <th class="p-2 border-b border-white text-sm">{{ rep }}</th>
+              <th class="p-1 border-b border-white text-xs">{{ rep }}</th>
             }
           </tr>
         </thead>
         <tbody>
           @for (row of values(); track $index) {
             <tr>
-              <td class="p-2 border-r border-white text-sm">
+              <td class="p-1 border-r border-white text-xs">
                 {{ rmService.formatNumber(row[0].weight) }}
               </td>
               @for (cell of row; track $index) {
                 <td
-                  class="p-2 border-r border-white/30 text-sm text-center"
-                  [style.backgroundColor]="cell.color"
-                  [style.color]="cell.textColor">
+                  class="p-1 border-r border-white/30 text-xs text-center"
+                  [ngClass]="[cell.color, cell.textColor]">
                   {{ rmService.formatNumber(cell.value) }}
                 </td>
               }
@@ -35,7 +35,8 @@ import { RmCalculatorService } from '../../services/rm-calculator.service';
         </tbody>
       </table>
     }
-  `
+  `,
+  imports: [NgClass]
 })
 export class RmTableComponent {
   values = input.required<RmValue[][]>();
