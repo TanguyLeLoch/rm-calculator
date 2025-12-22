@@ -16,10 +16,10 @@ import { RmValue } from '../../models/rm-values.model';
     RmTableComponent
   ],
   template: `
-    <div class="flex flex-col items-center justify-center text-white p-4">
-      <h1 class="text-2xl font-bold mb-6">RM Calculator</h1>
+    <div class="flex flex-col items-center justify-center text-white p-2">
+      <h1 class="text-xl font-bold mb-2">RM Calculator</h1>
 
-      <div class="mb-6">
+      <div class="mb-2">
         <app-number-input
           inputId="lastWeight"
           label="Last weight"
