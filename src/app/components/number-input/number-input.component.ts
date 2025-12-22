@@ -1,37 +1,46 @@
 import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputNumber } from 'primeng/inputnumber';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-number-input',
   standalone: true,
-  imports: [FormsModule, InputNumber],
+  imports: [FormsModule, InputNumber, Button],
   template: `
-    <div class="flex items-center gap-3 mb-3">
-      <label [for]="inputId()" class="w-36 text-sm text-gray-300">
+    <div class="flex items-center gap-2 mb-1">
+      <label [for]="inputId()" class="w-32 text-sm text-gray-300">
         {{ label() }}
       </label>
-      <p-inputnumber
-        [inputId]="inputId()"
-        [(ngModel)]="internalValue"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        [step]="step()"
-        incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus"
-        [minFractionDigits]="0"
-        [maxFractionDigits]="2"
-        (onFocus)="onFocus()"
-        (onBlur)="handleBlur()"
-        (ngModelChange)="onValueChange($event)"
-        [inputStyle]="{ width: '80px', textAlign: 'center' }"
-      />
-    </div>
-    <div
-      class="text-xs text-gray-400 mb-4 ml-36 pl-3 transition-opacity duration-300"
-      [class.opacity-100]="isFocused()"
-      [class.opacity-0]="!isFocused()">
-      {{ helpText() }}
+      <div class="flex items-center gap-1">
+        <p-button
+          icon="pi pi-minus"
+          [rounded]="true"
+          [text]="true"
+          severity="secondary"
+          size="small"
+          (onClick)="decrement($event)"
+        />
+        <p-inputnumber
+          [inputId]="inputId()"
+          [(ngModel)]="internalValue"
+          [showButtons]="false"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="2"
+          (onFocus)="onFocus()"
+          (onBlur)="handleBlur()"
+          (ngModelChange)="onValueChange($event)"
+          [inputStyle]="{ width: '60px', textAlign: 'center', fontSize: '14px' }"
+        />
+        <p-button
+          icon="pi pi-plus"
+          [rounded]="true"
+          [text]="true"
+          severity="secondary"
+          size="small"
+          (onClick)="increment($event)"
+        />
+      </div>
     </div>
   `
 })
@@ -66,5 +75,19 @@ export class NumberInputComponent {
 
   onValueChange(val: number): void {
     this.valueChange.emit(val);
+  }
+
+  increment(event: Event): void {
+    event.preventDefault();
+    const newVal = this.value() + this.step();
+    this.valueChange.emit(newVal);
+    this.blur.emit(newVal);
+  }
+
+  decrement(event: Event): void {
+    event.preventDefault();
+    const newVal = this.value() - this.step();
+    this.valueChange.emit(newVal);
+    this.blur.emit(newVal);
   }
 }
