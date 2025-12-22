@@ -89,9 +89,9 @@ export class RmCalculatorComponent {
   private rmService = inject(RmCalculatorService);
 
   // State signals
-  lastWeight = signal(180);
+  lastWeight = signal(40);
   lastRep = signal(10);
-  increment = signal(5);
+  increment = signal(2.5);
   minRep = signal(8);
   maxRep = signal(10);
   isBrzycki = signal(true);
