@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@import "primeicons/primeicons.css";
+@plugin "tailwindcss-primeui";
+
+@layer theme, base, primeng, components, utilities;
 
 /* Dark theme base */
 body {
