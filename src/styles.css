@@ -1,9 +1,11 @@
 @import "tailwindcss";
-@plugin "tailwindcss-primeui";
-
-@layer theme, base, primeng, components, utilities;
+@import "tailwindcss-primeui";
 
 /* Dark theme base */
 body {
-  @apply bg-gray-900 text-white min-h-screen m-0 font-sans;
+  background-color: #111827;
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
 }
