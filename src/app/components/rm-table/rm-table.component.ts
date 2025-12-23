@@ -1,4 +1,4 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, computed } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RmValue } from '../../models/rm-values.model';
 import { RmCalculatorService } from '../../services/rm-calculator.service';
@@ -18,12 +18,12 @@ import { RmCalculatorService } from '../../services/rm-calculator.service';
           </tr>
         </thead>
         <tbody>
-          @for (row of values(); track $index) {
+          @for (row of values(); track row[0].weight) {
             <tr>
               <td class="p-1 border-r border-white text-xs">
                 {{ rmService.formatNumber(row[0].weight) }}
               </td>
-              @for (cell of row; track $index) {
+              @for (cell of row; track cell.reps) {
                 <td
                   class="p-1 border-r border-white/30 text-xs text-center"
                   [ngClass]="[cell.color, cell.textColor]">
@@ -45,9 +45,10 @@ export class RmTableComponent {
 
   rmService = inject(RmCalculatorService);
 
-  repHeaders(): number[] {
+  // Use computed signal instead of method to avoid recalculation
+  repHeaders = computed(() => {
     const min = this.minRep();
     const max = this.maxRep();
     return Array.from({ length: max - min + 1 }, (_, i) => i + min);
-  }
+  });
 }

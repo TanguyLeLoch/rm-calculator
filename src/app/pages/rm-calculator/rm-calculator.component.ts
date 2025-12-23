@@ -25,7 +25,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Last weight"
           [value]="lastWeight()"
           [step]="increment()"
-          (blur)="lastWeight.set($event)"
+          (valueChange)="lastWeight.set($event)"
         />
 
         <app-number-input
@@ -33,6 +33,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Last rep number"
           [value]="lastRep()"
           [step]="1"
+          (valueChange)="lastRep.set($event)"
           (blur)="updateLastRep($event)"
         />
 
@@ -41,7 +42,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Weight increment"
           [value]="increment()"
           [step]="0.5"
-          (blur)="increment.set($event)"
+          (valueChange)="increment.set($event)"
         />
 
         <app-number-input
@@ -49,6 +50,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Min rep number"
           [value]="minRep()"
           [step]="1"
+          (valueChange)="minRep.set($event)"
           (blur)="updateMinRep($event)"
         />
 
@@ -57,6 +59,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Max rep number"
           [value]="maxRep()"
           [step]="1"
+          (valueChange)="maxRep.set($event)"
           (blur)="updateMaxRep($event)"
         />
       </div>
@@ -101,7 +104,6 @@ export class RmCalculatorComponent {
   });
 
   updateLastRep(value: number): void {
-    this.lastRep.set(value);
     if (value < this.minRep()) {
       this.minRep.set(value);
     } else if (value > this.maxRep()) {
@@ -110,14 +112,12 @@ export class RmCalculatorComponent {
   }
 
   updateMinRep(value: number): void {
-    this.minRep.set(value);
     if (value > this.maxRep()) {
       this.maxRep.set(value);
     }
   }
 
   updateMaxRep(value: number): void {
-    this.maxRep.set(value);
     if (value < this.minRep()) {
       this.minRep.set(value);
     }

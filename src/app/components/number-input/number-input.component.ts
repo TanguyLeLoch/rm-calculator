@@ -1,4 +1,4 @@
-import { Component, input, output, signal, effect } from '@angular/core';
+import { Component, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputNumber } from 'primeng/inputnumber';
 import { Button } from 'primeng/button';
@@ -23,12 +23,13 @@ import { Button } from 'primeng/button';
         />
         <p-inputnumber
           [inputId]="inputId()"
-          [(ngModel)]="displayValue"
+          [(ngModel)]="internalValue"
           [showButtons]="false"
           [minFractionDigits]="0"
           [maxFractionDigits]="2"
           (onFocus)="onFocus($event)"
           (onBlur)="handleBlur()"
+          (ngModelChange)="onValueChange($event)"
           [inputStyle]="{ width: '60px', textAlign: 'center', fontSize: '14px' }"
         />
         <p-button
@@ -53,21 +54,18 @@ export class NumberInputComponent {
   valueChange = output<number>();
   blur = output<number>();
 
-  displayValue = 0;
-  private isFocused = false;
+  isFocused = signal(false);
 
-  constructor() {
-    // Sync display value from parent when not focused
-    effect(() => {
-      const parentValue = this.value();
-      if (!this.isFocused) {
-        this.displayValue = parentValue;
-      }
-    });
+  get internalValue(): number {
+    return this.value();
+  }
+
+  set internalValue(val: number) {
+    this.valueChange.emit(val);
   }
 
   onFocus(event: Event): void {
-    this.isFocused = true;
+    this.isFocused.set(true);
     const input = event.target as HTMLInputElement;
     if (input) {
       setTimeout(() => input.select(), 0);
@@ -75,16 +73,18 @@ export class NumberInputComponent {
   }
 
   handleBlur(): void {
-    this.isFocused = false;
-    this.valueChange.emit(this.displayValue);
-    this.blur.emit(this.displayValue);
+    this.isFocused.set(false);
+    this.blur.emit(this.value());
+  }
+
+  onValueChange(val: number): void {
+    this.valueChange.emit(val);
   }
 
   increment(event: Event): void {
     event.preventDefault();
     (event.target as HTMLElement)?.closest('button')?.blur();
-    const newVal = this.displayValue + this.step();
-    this.displayValue = newVal;
+    const newVal = this.value() + this.step();
     this.valueChange.emit(newVal);
     this.blur.emit(newVal);
   }
@@ -92,8 +92,7 @@ export class NumberInputComponent {
   decrement(event: Event): void {
     event.preventDefault();
     (event.target as HTMLElement)?.closest('button')?.blur();
-    const newVal = this.displayValue - this.step();
-    this.displayValue = newVal;
+    const newVal = this.value() - this.step();
     this.valueChange.emit(newVal);
     this.blur.emit(newVal);
   }
