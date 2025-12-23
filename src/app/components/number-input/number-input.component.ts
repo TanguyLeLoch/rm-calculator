@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputNumber } from 'primeng/inputnumber';
 import { Button } from 'primeng/button';
@@ -22,7 +22,6 @@ import { Button } from 'primeng/button';
           (onClick)="decrement($event)"
         />
         <p-inputnumber
-          #inputNum
           [inputId]="inputId()"
           [(ngModel)]="internalValue"
           [showButtons]="false"
@@ -84,7 +83,7 @@ export class NumberInputComponent {
 
   increment(event: Event): void {
     event.preventDefault();
-    (event.target as HTMLElement)?.blur();
+    (event.target as HTMLElement)?.closest('button')?.blur();
     const newVal = this.value() + this.step();
     this.valueChange.emit(newVal);
     this.blur.emit(newVal);
@@ -92,7 +91,7 @@ export class NumberInputComponent {
 
   decrement(event: Event): void {
     event.preventDefault();
-    (event.target as HTMLElement)?.blur();
+    (event.target as HTMLElement)?.closest('button')?.blur();
     const newVal = this.value() - this.step();
     this.valueChange.emit(newVal);
     this.blur.emit(newVal);
