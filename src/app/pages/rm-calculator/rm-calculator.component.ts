@@ -25,8 +25,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Last weight"
           [value]="lastWeight()"
           [step]="increment()"
-          helpText="Enter the weight you lifted last time"
-          (valueChange)="lastWeight.set($event)"
+          (blur)="lastWeight.set($event)"
         />
 
         <app-number-input
@@ -34,8 +33,6 @@ import { RmValue } from '../../models/rm-values.model';
           label="Last rep number"
           [value]="lastRep()"
           [step]="1"
-          helpText="Enter the number of repetitions you did last time"
-          (valueChange)="lastRep.set($event)"
           (blur)="updateLastRep($event)"
         />
 
@@ -44,8 +41,7 @@ import { RmValue } from '../../models/rm-values.model';
           label="Weight increment"
           [value]="increment()"
           [step]="0.5"
-          helpText="Enter the minimum weight increment you can use"
-          (valueChange)="increment.set($event)"
+          (blur)="increment.set($event)"
         />
 
         <app-number-input
@@ -53,8 +49,6 @@ import { RmValue } from '../../models/rm-values.model';
           label="Min rep number"
           [value]="minRep()"
           [step]="1"
-          helpText="Enter the minimum number of repetitions you want to calculate"
-          (valueChange)="minRep.set($event)"
           (blur)="updateMinRep($event)"
         />
 
@@ -63,8 +57,6 @@ import { RmValue } from '../../models/rm-values.model';
           label="Max rep number"
           [value]="maxRep()"
           [step]="1"
-          helpText="Enter the maximum number of repetitions you want to calculate"
-          (valueChange)="maxRep.set($event)"
           (blur)="updateMaxRep($event)"
         />
       </div>
@@ -109,6 +101,7 @@ export class RmCalculatorComponent {
   });
 
   updateLastRep(value: number): void {
+    this.lastRep.set(value);
     if (value < this.minRep()) {
       this.minRep.set(value);
     } else if (value > this.maxRep()) {
@@ -117,12 +110,14 @@ export class RmCalculatorComponent {
   }
 
   updateMinRep(value: number): void {
+    this.minRep.set(value);
     if (value > this.maxRep()) {
       this.maxRep.set(value);
     }
   }
 
   updateMaxRep(value: number): void {
+    this.maxRep.set(value);
     if (value < this.minRep()) {
       this.minRep.set(value);
     }
