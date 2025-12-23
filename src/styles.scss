@@ -11,9 +11,24 @@ html, body {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
   transition: background-color 0.3s, color 0.3s;
+  background-color: white !important;
+  color: #1f2937;
+}
+
+html.dark, html.dark body {
+  background-color: #111827 !important;
+  color: white;
+}
+
+/* Override PrimeNG surface colors */
+:root {
+  --p-surface-0: white;
+  --p-surface-50: #fafafa;
+  --p-surface-ground: white;
 }
 
 html.dark {
-  background-color: #111827;
-  color: white;
+  --p-surface-0: #111827;
+  --p-surface-50: #1f2937;
+  --p-surface-ground: #111827;
 }
