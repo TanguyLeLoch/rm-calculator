@@ -22,12 +22,13 @@ import { Button } from 'primeng/button';
           (onClick)="decrement($event)"
         />
         <p-inputnumber
+          #inputNum
           [inputId]="inputId()"
           [(ngModel)]="internalValue"
           [showButtons]="false"
           [minFractionDigits]="0"
           [maxFractionDigits]="2"
-          (onFocus)="onFocus()"
+          (onFocus)="onFocus($event)"
           (onBlur)="handleBlur()"
           (ngModelChange)="onValueChange($event)"
           [inputStyle]="{ width: '60px', textAlign: 'center', fontSize: '14px' }"
@@ -64,8 +65,12 @@ export class NumberInputComponent {
     this.valueChange.emit(val);
   }
 
-  onFocus(): void {
+  onFocus(event: Event): void {
     this.isFocused.set(true);
+    const input = event.target as HTMLInputElement;
+    if (input) {
+      setTimeout(() => input.select(), 0);
+    }
   }
 
   handleBlur(): void {
@@ -79,6 +84,7 @@ export class NumberInputComponent {
 
   increment(event: Event): void {
     event.preventDefault();
+    (event.target as HTMLElement)?.blur();
     const newVal = this.value() + this.step();
     this.valueChange.emit(newVal);
     this.blur.emit(newVal);
@@ -86,6 +92,7 @@ export class NumberInputComponent {
 
   decrement(event: Event): void {
     event.preventDefault();
+    (event.target as HTMLElement)?.blur();
     const newVal = this.value() - this.step();
     this.valueChange.emit(newVal);
     this.blur.emit(newVal);
