@@ -11,24 +11,34 @@ html, body {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
   transition: background-color 0.3s, color 0.3s;
+  background: white !important;
   background-color: white !important;
-  color: #1f2937;
+  color: #1f2937 !important;
 }
 
 html.dark, html.dark body {
+  background: #111827 !important;
   background-color: #111827 !important;
-  color: white;
+  color: white !important;
 }
 
-/* Override PrimeNG surface colors */
+/* Override PrimeNG surface colors for light mode */
 :root {
-  --p-surface-0: white;
-  --p-surface-50: #fafafa;
-  --p-surface-ground: white;
+  --p-surface-0: white !important;
+  --p-surface-50: #fafafa !important;
+  --p-surface-100: #f5f5f5 !important;
+  --p-surface-200: #eeeeee !important;
+  --p-surface-ground: white !important;
+  --p-content-background: white !important;
+  --p-primary-contrast-color: white !important;
 }
 
+/* Override PrimeNG surface colors for dark mode */
 html.dark {
-  --p-surface-0: #111827;
-  --p-surface-50: #1f2937;
-  --p-surface-ground: #111827;
+  --p-surface-0: #111827 !important;
+  --p-surface-50: #1f2937 !important;
+  --p-surface-100: #374151 !important;
+  --p-surface-200: #4b5563 !important;
+  --p-surface-ground: #111827 !important;
+  --p-content-background: #111827 !important;
 }
