@@ -16,7 +16,7 @@ import { RmValue } from '../../models/rm-values.model';
     RmTableComponent
   ],
   template: `
-    <div class="flex flex-col items-center justify-center text-white p-2">
+    <div class="flex flex-col items-center justify-center p-2">
       <h1 class="text-xl font-bold mb-2">RM Calculator</h1>
 
       <div class="mb-2">
