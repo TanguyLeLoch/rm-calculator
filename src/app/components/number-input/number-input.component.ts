@@ -19,7 +19,8 @@ import { Button } from 'primeng/button';
           [text]="true"
           severity="secondary"
           size="small"
-          (onClick)="decrement($event)"
+          [tabindex]="-1"
+          (onClick)="decrement()"
         />
         <p-inputnumber
           [inputId]="inputId()"
@@ -38,7 +39,8 @@ import { Button } from 'primeng/button';
           [text]="true"
           severity="secondary"
           size="small"
-          (onClick)="increment($event)"
+          [tabindex]="-1"
+          (onClick)="increment()"
         />
       </div>
     </div>
@@ -81,19 +83,13 @@ export class NumberInputComponent {
     this.valueChange.emit(val);
   }
 
-  increment(event: Event): void {
-    event.preventDefault();
-    (event.target as HTMLElement)?.closest('button')?.blur();
+  increment(): void {
     const newVal = this.value() + this.step();
     this.valueChange.emit(newVal);
-    this.blur.emit(newVal);
   }
 
-  decrement(event: Event): void {
-    event.preventDefault();
-    (event.target as HTMLElement)?.closest('button')?.blur();
+  decrement(): void {
     const newVal = this.value() - this.step();
     this.valueChange.emit(newVal);
-    this.blur.emit(newVal);
   }
 }
