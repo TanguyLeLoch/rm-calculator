@@ -6,7 +6,7 @@ import { RmCalculatorComponent } from './pages/rm-calculator/rm-calculator.compo
   standalone: true,
   imports: [RmCalculatorComponent],
   template: `
-    <main class="dark-mode min-h-screen bg-gray-900">
+    <main class="min-h-screen">
       <app-rm-calculator />
     </main>
   `
