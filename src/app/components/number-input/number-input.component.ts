@@ -9,7 +9,7 @@ import { Button } from 'primeng/button';
   imports: [FormsModule, InputNumber, Button],
   template: `
     <div class="flex items-center gap-2 mb-1">
-      <label [for]="inputId()" class="w-32 text-sm text-gray-300">
+      <label [for]="inputId()" class="w-32 text-sm">
         {{ label() }}
       </label>
       <div class="flex items-center gap-1">

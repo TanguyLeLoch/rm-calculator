@@ -1,5 +1,4 @@
 import { Component, input, inject, computed } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { RmValue } from '../../models/rm-values.model';
 import { RmCalculatorService } from '../../services/rm-calculator.service';
@@ -7,7 +6,7 @@ import { RmCalculatorService } from '../../services/rm-calculator.service';
 @Component({
   selector: 'app-rm-table',
   standalone: true,
-  imports: [NgClass, TableModule],
+  imports: [TableModule],
   template: `
     @if (values() && values().length > 0) {
       <p-table
@@ -28,9 +27,7 @@ import { RmCalculatorService } from '../../services/rm-calculator.service';
               {{ rmService.formatNumber(row[0].weight) }}
             </td>
             @for (cell of row; track cell.reps) {
-              <td
-                class="text-xs p-1 text-center"
-                [ngClass]="[cell.color, cell.textColor]">
+              <td class="text-xs p-1 text-center">
                 {{ rmService.formatNumber(cell.value) }}
               </td>
             }

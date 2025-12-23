@@ -9,7 +9,11 @@
 html, body {
   height: 100%;
   margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+html.dark {
   background-color: #111827;
   color: white;
-  font-family: system-ui, -apple-system, sans-serif;
 }
