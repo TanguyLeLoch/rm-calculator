@@ -3,6 +3,7 @@ import { NumberInputComponent } from '../../components/number-input/number-input
 import { FormulaToggleComponent } from '../../components/formula-toggle/formula-toggle.component';
 import { LegendComponent } from '../../components/legend/legend.component';
 import { RmTableComponent } from '../../components/rm-table/rm-table.component';
+import { DarkModeToggleComponent } from '../../components/dark-mode-toggle/dark-mode-toggle.component';
 import { RmCalculatorService } from '../../services/rm-calculator.service';
 import { RmValue } from '../../models/rm-values.model';
 
@@ -13,11 +14,15 @@ import { RmValue } from '../../models/rm-values.model';
     NumberInputComponent,
     FormulaToggleComponent,
     LegendComponent,
-    RmTableComponent
+    RmTableComponent,
+    DarkModeToggleComponent
   ],
   template: `
     <div class="flex flex-col items-center justify-center p-2">
-      <h1 class="text-xl font-bold mb-2">RM Calculator</h1>
+      <div class="flex items-center gap-2 mb-2">
+        <h1 class="text-xl font-bold">RM Calculator</h1>
+        <app-dark-mode-toggle />
+      </div>
 
       <div class="mb-2">
         <app-number-input
