@@ -1,42 +1,44 @@
 import { Component, input, inject, computed } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { TableModule } from 'primeng/table';
 import { RmValue } from '../../models/rm-values.model';
 import { RmCalculatorService } from '../../services/rm-calculator.service';
 
 @Component({
   selector: 'app-rm-table',
   standalone: true,
+  imports: [NgClass, TableModule],
   template: `
     @if (values() && values().length > 0) {
-      <table class="border-collapse mx-auto my-2">
-        <thead>
+      <p-table
+        [value]="values()"
+        [tableStyle]="{ 'min-width': 'auto' }"
+        styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
           <tr>
-            <th class="p-1 border-b border-white text-xs">W \\ R</th>
+            <th class="text-xs p-1">W \\ R</th>
             @for (rep of repHeaders(); track rep) {
-              <th class="p-1 border-b border-white text-xs">{{ rep }}</th>
+              <th class="text-xs p-1">{{ rep }}</th>
             }
           </tr>
-        </thead>
-        <tbody>
-          @for (row of values(); track row[0].weight) {
-            <tr>
-              <td class="p-1 border-r border-white text-xs">
-                {{ rmService.formatNumber(row[0].weight) }}
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td class="text-xs p-1">
+              {{ rmService.formatNumber(row[0].weight) }}
+            </td>
+            @for (cell of row; track cell.reps) {
+              <td
+                class="text-xs p-1 text-center"
+                [ngClass]="[cell.color, cell.textColor]">
+                {{ rmService.formatNumber(cell.value) }}
               </td>
-              @for (cell of row; track cell.reps) {
-                <td
-                  class="p-1 border-r border-white/30 text-xs text-center"
-                  [ngClass]="[cell.color, cell.textColor]">
-                  {{ rmService.formatNumber(cell.value) }}
-                </td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
+            }
+          </tr>
+        </ng-template>
+      </p-table>
     }
-  `,
-  imports: [NgClass]
+  `
 })
 export class RmTableComponent {
   values = input.required<RmValue[][]>();
@@ -45,7 +47,6 @@ export class RmTableComponent {
 
   rmService = inject(RmCalculatorService);
 
-  // Use computed signal instead of method to avoid recalculation
   repHeaders = computed(() => {
     const min = this.minRep();
     const max = this.maxRep();
