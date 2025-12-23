@@ -30,25 +30,27 @@ export class RmCalculatorService {
 
       for (let r = minRep; r <= maxRep; r++) {
         const rm = this.calculateRm(w, r, isBrzycki);
-        let color: string;
-        let textColor = 'white';
+        let bgColor: string;
+        let textColor: string;
 
         if (rm < currentRm) {
-          color = 'gray';
+          bgColor = 'bg-gray-500';
+          textColor = 'text-white';
         } else if (w === lastWeight && r === lastReps) {
-          color = 'green';
-          textColor = 'black';
+          bgColor = 'bg-green-500';
+          textColor = 'text-black';
         } else if (r !== lastReps && rm > currentRm && !setColorPerRep.has(r)) {
           setColorPerRep.add(r);
-          color = 'yellow';
-          textColor = 'black';
+          bgColor = 'bg-yellow-400';
+          textColor = 'text-black';
         } else {
-          color = 'black';
+          bgColor = 'bg-gray-900';
+          textColor = 'text-white';
         }
 
         const rmValue: RmValue = {
           value: rm,
-          color,
+          color: bgColor,
           reps: r,
           weight: w,
           textColor
@@ -56,7 +58,7 @@ export class RmCalculatorService {
 
         line.push(rmValue);
 
-        if (color === 'yellow') {
+        if (bgColor === 'bg-yellow-400') {
           yellows.push(rmValue);
         }
       }
@@ -67,13 +69,13 @@ export class RmCalculatorService {
     // Find the minimum yellow value and mark it as orange (goal)
     if (yellows.length > 0) {
       let minValue = yellows[0];
-      minValue.color = 'orange';
+      minValue.color = 'bg-orange-500';
 
       for (const y of yellows) {
         if (y.value < minValue.value) {
-          minValue.color = 'yellow';
+          minValue.color = 'bg-yellow-400';
           minValue = y;
-          minValue.color = 'orange';
+          minValue.color = 'bg-orange-500';
         }
       }
     }
