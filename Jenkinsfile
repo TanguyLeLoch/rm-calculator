@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+
+    parameters {
+        booleanParam(name: 'SKIP_PATH_CHECK', defaultValue: false, description: 'Skip path change detection (for manual builds)')
+        booleanParam(name: 'DEPLOY_AFTER_BUILD', defaultValue: true, description: 'Trigger Dokploy deployment after successful build')
+    }
+
+    environment {
+        DOCKER_REGISTRY = 'tanguyleloch'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
+        IMAGE_NAME = 'rm-calculator'
+        IMAGE_TAG = "${BUILD_NUMBER}"
+        DOKPLOY_WEBHOOK = 'https://dokploy2.tanguyleloch.com/api/deploy/YOUR_WEBHOOK_ID'  // TODO: Replace with your actual webhook ID
+    }
+
+    stages {
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    // Build Docker image
+                    echo "Building Docker image..."
+                    def appImage = docker.build(
+                        "${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}",
+                        "-f Dockerfile ."
+                    )
+
+                    // Login and push to Docker Hub
+                    echo "Pushing to Docker Hub..."
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_CREDENTIALS_ID}") {
+                        appImage.push("${IMAGE_TAG}")
+                        appImage.push('latest')
+                    }
+
+                    echo "Pushed ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    echo "Pushed ${DOCKER_REGISTRY}/${IMAGE_NAME}:latest"
+                }
+            }
+        }
+
+        stage('Deploy to Dokploy') {
+            when {
+                expression { params.DEPLOY_AFTER_BUILD == true }
+            }
+            steps {
+                script {
+                    echo "Triggering Dokploy deployment..."
+                    sh """
+                        curl -X POST ${DOKPLOY_WEBHOOK} \
+                        -H 'Content-Type: application/json' \
+                        -d '{"image":"${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"}'
+                    """
+                    echo "Deployment triggered successfully"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo """
+================================================================================
+BUILD SUCCESS
+================================================================================
+Image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+Latest: ${DOCKER_REGISTRY}/${IMAGE_NAME}:latest
+Docker Hub: https://hub.docker.com/r/${DOCKER_REGISTRY}/${IMAGE_NAME}
+================================================================================
+"""
+        }
+
+        failure {
+            echo "Build failed! Check the logs above."
+        }
+
+        cleanup {
+            sh '''
+                docker system prune -f
+            '''
+        }
+    }
+}

@@ -1,0 +1,47 @@
+<div class="flex items-center gap-2 mb-1">
+  <label [for]="inputId()" class="w-32 text-sm">
+    {{ label() }}
+  </label>
+  <div class="flex items-center gap-1">
+    <p-button
+      icon="pi pi-minus"
+      [rounded]="true"
+      [text]="true"
+      severity="secondary"
+      size="small"
+      [tabindex]="-1"
+      (onClick)="decrement()"
+    />
+    <p-inputnumber
+      [inputId]="inputId()"
+      [(ngModel)]="internalValue"
+      [showButtons]="false"
+      [minFractionDigits]="0"
+      [maxFractionDigits]="2"
+      (onFocus)="onFocus($event)"
+      (onBlur)="handleBlur()"
+      (ngModelChange)="onValueChange($event)"
+      [inputStyle]="{ width: '60px', textAlign: 'center', fontSize: '14px' }"
+    />
+    <p-button
+      icon="pi pi-plus"
+      [rounded]="true"
+      [text]="true"
+      severity="secondary"
+      size="small"
+      [tabindex]="-1"
+      (onClick)="increment()"
+    />
+  </div>
+  @if (quickValues().length > 0) {
+    <p-selectbutton
+      [options]="quickOptions()"
+      [ngModel]="value()"
+      (ngModelChange)="selectQuickValue($event)"
+      optionLabel="label"
+      optionValue="value"
+      size="small"
+      [allowEmpty]="true"
+    />
+  }
+</div>

@@ -17,73 +17,7 @@ import { RmValue } from '../../models/rm-values.model';
     RmTableComponent,
     DarkModeToggleComponent
   ],
-  template: `
-    <div class="flex flex-col items-center justify-center p-2">
-      <div class="flex items-center gap-2 mb-2">
-        <h1 class="text-xl font-bold">RM Calculator</h1>
-        <app-dark-mode-toggle />
-      </div>
-
-      <div class="mb-2">
-        <app-number-input
-          inputId="lastWeight"
-          label="Last weight"
-          [value]="lastWeight()"
-          [step]="increment()"
-          (valueChange)="lastWeight.set($event)"
-        />
-
-        <app-number-input
-          inputId="lastRep"
-          label="Last rep number"
-          [value]="lastRep()"
-          [step]="1"
-          (valueChange)="lastRep.set($event)"
-          (blur)="updateLastRep($event)"
-        />
-
-        <app-number-input
-          inputId="increment"
-          label="Weight increment"
-          [value]="increment()"
-          [step]="0.5"
-          (valueChange)="increment.set($event)"
-        />
-
-        <app-number-input
-          inputId="minRep"
-          label="Min rep number"
-          [value]="minRep()"
-          [step]="1"
-          (valueChange)="minRep.set($event)"
-          (blur)="updateMinRep($event)"
-        />
-
-        <app-number-input
-          inputId="maxRep"
-          label="Max rep number"
-          [value]="maxRep()"
-          [step]="1"
-          (valueChange)="maxRep.set($event)"
-          (blur)="updateMaxRep($event)"
-        />
-      </div>
-
-      <app-rm-table
-        [values]="resultsMatrix()"
-        [minRep]="minRep()"
-        [maxRep]="maxRep()"
-      />
-
-      <app-legend />
-
-      <app-formula-toggle
-        label1="Brzycki"
-        label2="Epley"
-        (toggle)="onFormulaToggle($event)"
-      />
-    </div>
-  `
+  templateUrl: './rm-calculator.component.html'
 })
 export class RmCalculatorComponent {
   private rmService = inject(RmCalculatorService);

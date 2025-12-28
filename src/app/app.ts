@@ -5,10 +5,6 @@ import { RmCalculatorComponent } from './pages/rm-calculator/rm-calculator.compo
   selector: 'app-root',
   standalone: true,
   imports: [RmCalculatorComponent],
-  template: `
-    <main class="dark-mode min-h-screen bg-gray-900">
-      <app-rm-calculator />
-    </main>
-  `
+  templateUrl: './app.html'
 })
 export class App {}

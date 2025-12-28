@@ -4,7 +4,7 @@
   "homepage": "https://tanguyleloch.github.io/rm-calculator",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --watch",
     "build": "ng build --base-href /rm-calculator/",
     "build:prod": "ng build --configuration production --base-href /rm-calculator/",
     "watch": "ng build --watch --configuration development",

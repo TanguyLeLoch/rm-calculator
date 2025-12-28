@@ -44,8 +44,8 @@ export class RmCalculatorService {
           bgColor = 'bg-yellow-400';
           textColor = 'text-black';
         } else {
-          bgColor = 'bg-gray-900';
-          textColor = 'text-white';
+          bgColor = 'bg-surface-100';
+          textColor = 'text-surface-900';
         }
 
         const rmValue: RmValue = {

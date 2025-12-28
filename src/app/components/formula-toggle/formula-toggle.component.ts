@@ -6,28 +6,7 @@ import { ToggleSwitch } from 'primeng/toggleswitch';
   selector: 'app-formula-toggle',
   standalone: true,
   imports: [FormsModule, ToggleSwitch],
-  template: `
-    <div class="flex items-center justify-center gap-3 mt-4">
-      <span
-        class="text-xs px-1 transition-all duration-200"
-        [class.border]="!isToggled()"
-        [class.border-white/50]="!isToggled()"
-        [class.rounded]="!isToggled()">
-        {{ label1() }}
-      </span>
-      <p-toggleswitch
-        [(ngModel)]="isToggled"
-        (ngModelChange)="onToggle($event)"
-      />
-      <span
-        class="text-xs px-1 transition-all duration-200"
-        [class.border]="isToggled()"
-        [class.border-white/50]="isToggled()"
-        [class.rounded]="isToggled()">
-        {{ label2() }}
-      </span>
-    </div>
-  `
+  templateUrl: './formula-toggle.component.html'
 })
 export class FormulaToggleComponent {
   label1 = input<string>('Brzycki');
