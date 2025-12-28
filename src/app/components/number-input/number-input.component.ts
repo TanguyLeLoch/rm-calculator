@@ -1,4 +1,4 @@
-import { Component, input, output, signal, computed } from '@angular/core';
+import { Component, input, output, signal, computed, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputNumber } from 'primeng/inputnumber';
 import { Button } from 'primeng/button';
@@ -17,10 +17,12 @@ export class NumberInputComponent {
   helpText = input<string>('');
   step = input<number>(1);
   quickValues = input<number[]>([]);
+  autoBlurOnTwoDigits = input<boolean>(false);
 
   valueChange = output<number>();
   blur = output<number>();
 
+  private inputNumberRef = viewChild<InputNumber>('inputNumber');
   isFocused = signal(false);
 
   quickOptions = computed(() =>
@@ -46,13 +48,24 @@ export class NumberInputComponent {
     }
   }
 
+  private pendingBlurValue: number | null = null;
+
   handleBlur(): void {
     this.isFocused.set(false);
-    this.blur.emit(this.value());
+    // Use pending value if set by auto-blur, otherwise use current value
+    const valueToEmit = this.pendingBlurValue ?? this.value();
+    this.pendingBlurValue = null;
+    this.blur.emit(valueToEmit);
   }
 
   onValueChange(val: number): void {
     this.valueChange.emit(val);
+
+    // Auto-blur when value reaches 2 digits
+    if (this.autoBlurOnTwoDigits() && val >= 10) {
+      this.pendingBlurValue = val;
+      this.inputNumberRef()?.input?.nativeElement?.blur();
+    }
   }
 
   increment(): void {

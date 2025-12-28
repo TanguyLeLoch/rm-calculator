@@ -18,6 +18,7 @@
       label="Last rep number"
       [value]="lastRep()"
       [step]="1"
+      [autoBlurOnTwoDigits]="true"
       (valueChange)="lastRep.set($event)"
       (blur)="updateLastRep($event)"
     />
@@ -50,11 +51,13 @@
     />
   </div>
 
-  <app-rm-table
-    [values]="resultsMatrix()"
-    [minRep]="minRep()"
-    [maxRep]="maxRep()"
-  />
+  <div class="max-w-[100vw] overflow-x-auto">
+    <app-rm-table
+      [values]="resultsMatrix()"
+      [minRep]="minRep()"
+      [maxRep]="maxRep()"
+    />
+  </div>
 
   <app-legend />
 
