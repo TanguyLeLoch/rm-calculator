@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     parameters {
-        booleanParam(name: 'SKIP_PATH_CHECK', defaultValue: false, description: 'Skip path change detection (for manual builds)')
         booleanParam(name: 'DEPLOY_AFTER_BUILD', defaultValue: true, description: 'Trigger Dokploy deployment after successful build')
     }
 
