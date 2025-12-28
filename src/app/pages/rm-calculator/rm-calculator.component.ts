@@ -23,7 +23,7 @@ export class RmCalculatorComponent {
   private rmService = inject(RmCalculatorService);
 
   // State signals
-  lastWeight = signal(42);
+  lastWeight = signal(43);
   lastRep = signal(10);
   increment = signal(2.5);
   minRep = signal(8);
