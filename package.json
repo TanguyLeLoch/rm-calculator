@@ -1,17 +1,14 @@
 {
   "name": "rm-calculator",
   "version": "0.1.0",
-  "homepage": "https://tanguyleloch.github.io/rm-calculator",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --watch",
-    "build": "ng build --base-href /rm-calculator/",
-    "build:prod": "ng build --configuration production --base-href /rm-calculator/",
+    "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "npm run build && node scripts/test-tailwind.js",
-    "test:tailwind": "node scripts/test-tailwind.js",
-    "predeploy": "npm run build:prod",
-    "deploy": "npx gh-pages -d dist/rm-calculator/browser"
+    "test:tailwind": "node scripts/test-tailwind.js"
   },
   "prettier": {
     "printWidth": 100,
@@ -50,7 +47,6 @@
     "@angular/build": "^21.0.4",
     "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^21.0.0",
-    "gh-pages": "^6.3.0",
     "typescript": "~5.9.2"
   }
 }
