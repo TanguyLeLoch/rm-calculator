@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RmValue, RmCalculatorInput } from '../models/rm-values.model';
+import { RmCalculatorInput, RmValue } from '../models/rm-values.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class RmCalculatorService {
   }
 
   computeRmMatrix(input: RmCalculatorInput): RmValue[][] {
-    const { lastWeight, lastReps, increment, minRep, maxRep, isBrzycki } = input;
+    const {lastWeight, lastReps, increment, minRep, maxRep, isBrzycki} = input;
 
     if (!this.validateInput(input)) {
       return [];
@@ -84,7 +84,7 @@ export class RmCalculatorService {
   }
 
   private validateInput(input: RmCalculatorInput): boolean {
-    const { lastWeight, lastReps, increment, minRep, maxRep } = input;
+    const {lastWeight, lastReps, increment, minRep, maxRep} = input;
 
     const fields = [lastWeight, lastReps, increment, minRep, maxRep];
 
@@ -101,11 +101,8 @@ export class RmCalculatorService {
       return false;
     }
 
-    if (increment <= 0) {
-      return false;
-    }
+    return increment > 0;
 
-    return true;
   }
 
   formatNumber(num: number): string {
