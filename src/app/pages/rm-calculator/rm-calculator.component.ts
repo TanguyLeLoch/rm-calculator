@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject, effect } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { NumberInputComponent } from '../../components/number-input/number-input.component';
 import { FormulaToggleComponent } from '../../components/formula-toggle/formula-toggle.component';
 import { LegendComponent } from '../../components/legend/legend.component';
@@ -23,7 +23,7 @@ export class RmCalculatorComponent {
   private rmService = inject(RmCalculatorService);
 
   // State signals
-  lastWeight = signal(40);
+  lastWeight = signal(41);
   lastRep = signal(10);
   increment = signal(2.5);
   minRep = signal(8);
