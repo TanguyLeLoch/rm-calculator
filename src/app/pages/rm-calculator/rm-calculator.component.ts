@@ -62,6 +62,11 @@ export class RmCalculatorComponent {
     }
   }
 
+  onCellClick(cell: RmValue): void {
+    this.lastWeight.set(cell.weight);
+    this.lastRep.set(cell.reps);
+  }
+
   onFormulaToggle(isEpley: boolean): void {
     this.isBrzycki.set(!isEpley);
   }
