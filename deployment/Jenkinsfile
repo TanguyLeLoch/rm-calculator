@@ -10,7 +10,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         IMAGE_NAME = 'rm-calculator'
         IMAGE_TAG = "${BUILD_NUMBER}"
-        DOKPLOY_WEBHOOK = 'https://dokploy2.tanguyleloch.com/api/deploy/30iD45xPf1AI0YN8yf3TN'
+        DOKPLOY_WEBHOOK = 'https://maxpower.hen-fir.ts.net:3001/api/deploy/30iD45xPf1AI0YN8yf3TN'
     }
 
     stages {
