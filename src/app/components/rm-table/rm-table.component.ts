@@ -1,4 +1,4 @@
-import { Component, input, inject, computed } from '@angular/core';
+import { Component, input, inject, computed, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { RmValue } from '../../models/rm-values.model';
@@ -14,6 +14,8 @@ export class RmTableComponent {
   values = input.required<RmValue[][]>();
   minRep = input.required<number>();
   maxRep = input.required<number>();
+
+  cellClick = output<RmValue>();
 
   rmService = inject(RmCalculatorService);
 

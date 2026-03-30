@@ -18,7 +18,7 @@
             {{ rmService.formatNumber(row[0].weight) }}
           </td>
           @for (cell of row; track cell.reps) {
-            <td class="text-xs p-1 text-center" [ngClass]="[cell.color, cell.textColor]">
+            <td class="text-xs p-1 text-center cursor-pointer" [ngClass]="[cell.color, cell.textColor]" (click)="cellClick.emit(cell)">
               {{ rmService.formatNumber(cell.value) }}
             </td>
           }
