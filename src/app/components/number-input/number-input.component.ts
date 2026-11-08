@@ -1,4 +1,4 @@
-import { Component, input, output, signal, computed, viewChild } from '@angular/core';
+import { Component, computed, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputNumber } from 'primeng/inputnumber';
 import { Button } from 'primeng/button';
@@ -64,7 +64,7 @@ export class NumberInputComponent {
     // Auto-blur when value reaches 2 digits
     if (this.autoBlurOnTwoDigits() && val >= 10) {
       this.pendingBlurValue = val;
-      this.inputNumberRef()?.input?.nativeElement?.blur();
+      this.inputNumberRef()?.input()?.nativeElement.blur();
     }
   }
 

@@ -4,7 +4,7 @@
       [value]="values()"
       [tableStyle]="{ 'min-width': 'auto' }"
       styleClass="p-datatable-sm">
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th class="text-xs p-1">W \ R</th>
           @for (rep of repHeaders(); track rep) {
@@ -12,7 +12,7 @@
           }
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-row>
+      <ng-template #body let-row>
         <tr>
           <td class="text-xs p-1">
             {{ rmService.formatNumber(row[0].weight) }}
