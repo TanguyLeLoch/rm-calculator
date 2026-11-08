@@ -12,5 +12,4 @@ export interface RmCalculatorInput {
   increment: number;
   minRep: number;
   maxRep: number;
-  isBrzycki: boolean;
 }

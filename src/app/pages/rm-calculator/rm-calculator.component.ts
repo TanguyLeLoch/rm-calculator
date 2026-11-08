@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { NumberInputComponent } from '../../components/number-input/number-input.component';
-import { FormulaToggleComponent } from '../../components/formula-toggle/formula-toggle.component';
 import { LegendComponent } from '../../components/legend/legend.component';
 import { RmTableComponent } from '../../components/rm-table/rm-table.component';
 import { DarkModeToggleComponent } from '../../components/dark-mode-toggle/dark-mode-toggle.component';
@@ -12,7 +11,6 @@ import { RmValue } from '../../models/rm-values.model';
   standalone: true,
   imports: [
     NumberInputComponent,
-    FormulaToggleComponent,
     LegendComponent,
     RmTableComponent,
     DarkModeToggleComponent
@@ -28,7 +26,6 @@ export class RmCalculatorComponent {
   increment = signal(2.5);
   minRep = signal(8);
   maxRep = signal(10);
-  isBrzycki = signal(true);
 
   // Computed results matrix
   resultsMatrix = computed<RmValue[][]>(() => {
@@ -37,8 +34,7 @@ export class RmCalculatorComponent {
       lastReps: this.lastRep(),
       increment: this.increment(),
       minRep: this.minRep(),
-      maxRep: this.maxRep(),
-      isBrzycki: this.isBrzycki()
+      maxRep: this.maxRep()
     });
   });
 
@@ -65,9 +61,5 @@ export class RmCalculatorComponent {
   onCellClick(cell: RmValue): void {
     this.lastWeight.set(cell.weight);
     this.lastRep.set(cell.reps);
-  }
-
-  onFormulaToggle(isEpley: boolean): void {
-    this.isBrzycki.set(!isEpley);
   }
 }

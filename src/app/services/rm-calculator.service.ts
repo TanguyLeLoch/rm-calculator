@@ -6,21 +6,28 @@ import { RmCalculatorInput, RmValue } from '../models/rm-values.model';
 })
 export class RmCalculatorService {
 
-  calculateRm(weight: number, reps: number, isBrzycki: boolean): number {
-    if (isBrzycki) {
-      return weight * (36 / (37 - reps));
-    }
-    return weight * (1 + (1 / 30) * reps);
+  // Hevy's rep-to-percentage table (index = reps - 1), see
+  // https://help.hevyapp.com/hc/en-us/articles/36954464726167
+  private static readonly HEVY_PERCENTAGES = [
+    1.00, 0.97, 0.94, 0.92, 0.89, 0.86, 0.83, 0.81, 0.78, 0.75,
+    0.73, 0.71, 0.70, 0.68, 0.67, 0.65, 0.64, 0.63, 0.61, 0.60,
+    0.59, 0.58, 0.57, 0.56, 0.55, 0.54, 0.53, 0.52, 0.51, 0.50
+  ];
+
+  calculateRm(weight: number, reps: number): number {
+    const table = RmCalculatorService.HEVY_PERCENTAGES;
+    const index = Math.min(Math.max(Math.round(reps), 1), table.length) - 1;
+    return weight / table[index];
   }
 
   computeRmMatrix(input: RmCalculatorInput): RmValue[][] {
-    const {lastWeight, lastReps, increment, minRep, maxRep, isBrzycki} = input;
+    const {lastWeight, lastReps, increment, minRep, maxRep} = input;
 
     if (!this.validateInput(input)) {
       return [];
     }
 
-    const currentRm = this.calculateRm(lastWeight, lastReps, isBrzycki);
+    const currentRm = this.calculateRm(lastWeight, lastReps);
     const setColorPerRep = new Set<number>();
     const yellows: RmValue[] = [];
     const values: RmValue[][] = [];
@@ -29,7 +36,7 @@ export class RmCalculatorService {
       const line: RmValue[] = [];
 
       for (let r = minRep; r <= maxRep; r++) {
-        const rm = this.calculateRm(w, r, isBrzycki);
+        const rm = this.calculateRm(w, r);
         let bgColor: string;
         let textColor: string;
 
